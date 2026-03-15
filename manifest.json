@@ -1,20 +1,20 @@
 {
-  "name": "TFPC 5to 2da - ESRN N° 11",
-  "short_name": "TFPC ESRN11",
-  "description": "App de recursos para estudiantes de la ESRN N° 11 - Villa Regina",
+  "name": "TPSE 5to 2da - ESRN N° 11",
+  "short_name": "TPSE 5-2",
+  "description": "Recursos de la materia TPSE para estudiantes de la ESRN N° 11",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#FFF8F0", /* Color de fondo de la Splash Screen */
-  "theme_color": "#A0522D",      /* Color de la barra de estado del celular */
+  "background_color": "#FFF8F0",
+  "theme_color": "#A0522D",
   "icons": [
     {
-      "src": "https://via.placeholder.com/192/A0522D/FFF8F0?text=ESRN11",
+      "src": "assets/logo-512.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "https://via.placeholder.com/512/A0522D/FFF8F0?text=ESRN11",
+      "src": "assets/logo-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
