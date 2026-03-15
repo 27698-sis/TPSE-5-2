@@ -1,24 +1,23 @@
-const CACHE_NAME = 'tfpc-cache-v1';
-const urlsToCache = [
-  './',
-  './index.html',
-  './style.css',
-  './manifest.json',
-  './app.js'
-];
-
-// Instalación: guarda los archivos básicos en el celular
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-  );
-});
-
-// Estrategia: si no hay internet, busca en el caché
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
-  );
-});
+{
+  "name": "TPSE 5to 2da - ESRN N° 11",
+  "short_name": "TPSE 5-2",
+  "description": "Recursos de la materia TPSE para estudiantes de la ESRN N° 11",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FFF8F0",
+  "theme_color": "#A0522D",
+  "icons": [
+    {
+      "src": "assets/logo-512.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
