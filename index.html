@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TPSE 5to 2da - ESRN 11</title>
     
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    
     <meta name="theme-color" content="#A0522D">
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="assets/logo-512.png">
@@ -21,33 +21,29 @@
     </header>
 
     <main>
-        <div id="install-card" class="card hidden install-prompt">
-            <h3>📱 ¡Llevanos en tu celu!</h3>
-            <p>Instalá esta app para acceder a los materiales de clase incluso sin internet.</p>
-            <button id="install-button" class="btn-primario">Instalar Ahora</button>
+        <div id="install-card" class="install-banner hidden">
+            <div class="install-container">
+                <img src="assets/logo-512.png" alt="Logo TPSE" class="mini-logo">
+                <div class="install-info">
+                    <strong>TPSE 5° 2° App</strong>
+                    <p>Accedé a los materiales offline</p>
+                </div>
+                <button id="install-button" class="btn-install-now">INSTALAR</button>
+                <button id="close-install" class="btn-close">✕</button>
+            </div>
         </div>
 
-        <section class="card">
-            <h3>📢 Avisos Importantes</h3>
-            <div class="aviso-item">
-                <strong>Bienvenida:</strong> ¡Bienvenidos al ciclo lectivo 2026! Aquí encontrarán todo lo necesario para la cursada.
-            </div>
+        <section class="content-card">
+            <h3>📢 Avisos de la Materia</h3>
+            <p>Bienvenidos. Este es el espacio digital de Formación Política y Ciudadana. Los materiales se guardan automáticamente para cuando no tengas conexión.</p>
         </section>
 
-        <section class="card">
-            <h3>📚 Materiales de Estudio</h3>
-            <ul class="lista-materiales">
-                <li>
-                    <a href="materiales/programa.txt">
-                        <span>📄 Programa de la Materia</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span>📗 Eje 1: Teoría Política</span>
-                    </a>
-                </li>
-            </ul>
+        <section class="content-card">
+            <h3>📚 Ejes Temáticos</h3>
+            <div class="material-item">
+                <span>📄 Eje 1: Teoría Política</span>
+                <span class="status-offline">✓ Disponible</span>
+            </div>
         </section>
     </main>
 
