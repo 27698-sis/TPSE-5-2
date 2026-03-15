@@ -2,51 +2,601 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TPSE 5to 2da - ESRN 11</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>TPSE 5° 2° - ESRN 11 | Taller de Proyectos Socio Educativos</title>
     
-    <link rel="stylesheet" href="style.css">
+    <!-- PWA Essentials -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#A0522D">
+    <meta name="background-color" content="#FAF9F7">
     
+    <!-- iOS Support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="assets/logo-512.png">
+    <meta name="apple-mobile-web-app-title" content="TPSE 5°2°">
+    <link rel="apple-touch-icon" href="assets/logo-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="assets/logo-512.png">
+    
+    <!-- SEO -->
+    <meta name="description" content="App del Taller de Proyectos Socio Educativos - ESRN N° 11 Villa Regina. Gestión de proyectos, materiales y seguimiento de avances.">
+    <meta name="keywords" content="TPSE, proyectos socio educativos, ESRN 11, Villa Regina, taller proyectos">
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 </head>
 <body>
 
-    <header>
-        <h1>TPSE 5° 2°</h1>
-        <p>ESRN N° 11 - Villa Regina</p>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+    <!-- Header con gradiente animado -->
+    <header role="banner">
+        <div class="header-content">
+            <img src="assets/logo-512.png" alt="Logo TPSE" class="header-logo" width="56" height="56">
+            <div class="header-text">
+                <h1>TPSE 5° 2°</h1>
+                <p>ESRN N° 11 - Villa Regina</p>
+                <span class="subject-tag">Taller de Proyectos Socio Educativos</span>
+            </div>
+            <button id="menu-toggle" class="menu-btn" aria-label="Abrir menú" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        
+        <!-- Indicador de conexión -->
+        <div id="connection-status" class="connection-indicator online" role="status" aria-live="polite">
+            <span class="status-dot"></span>
+            <span class="status-text">Online</span>
+        </div>
     </header>
 
-    <main>
-        <div id="install-card" class="install-banner hidden">
+    <!-- Navegación principal (desktop) -->
+    <nav id="main-nav" class="main-navigation desktop-only" role="navigation" aria-label="Navegación principal">
+        <ul>
+            <li><a href="#dashboard" class="nav-link active" data-section="dashboard">
+                <span class="nav-icon">📊</span> Panel
+            </a></li>
+            <li><a href="#proyectos" class="nav-link" data-section="proyectos">
+                <span class="nav-icon">🚀</span> Proyectos
+            </a></li>
+            <li><a href="#materiales" class="nav-link" data-section="materiales">
+                <span class="nav-icon">📚</span> Materiales
+            </a></li>
+            <li><a href="#calendario" class="nav-link" data-section="calendario">
+                <span class="nav-icon">📅</span> Calendario
+            </a></li>
+            <li><a href="#equipo" class="nav-link" data-section="equipo">
+                <span class="nav-icon">👥</span> Equipo
+            </a></li>
+        </ul>
+    </nav>
+
+    <main id="main-content" role="main">
+
+        <!-- Banner de instalación -->
+        <div id="install-banner" class="install-banner hidden" role="alertdialog" aria-labelledby="install-title">
             <div class="install-container">
-                <img src="assets/logo-512.png" alt="Logo TPSE" class="mini-logo">
+                <img src="assets/logo-512.png" alt="" class="mini-logo" width="48" height="48">
                 <div class="install-info">
-                    <strong>TPSE 5° 2° App</strong>
-                    <p>Accedé a los materiales offline</p>
+                    <strong id="install-title">Instalá TPSE 5°2°</strong>
+                    <p>Accedé a tus proyectos sin conexión</p>
                 </div>
-                <button id="install-button" class="btn-install-now">INSTALAR</button>
-                <button id="close-install" class="btn-close">✕</button>
+                <div class="install-actions">
+                    <button id="install-btn" class="btn btn-install" type="button">
+                        <span>⬇️</span> Instalar
+                    </button>
+                    <button id="dismiss-install" class="btn-close" type="button" aria-label="Cerrar">✕</button>
+                </div>
             </div>
         </div>
 
-        <section class="content-card">
-            <h3>📢 Avisos de la Materia</h3>
-            <p>Bienvenidos. Este es el espacio digital de Formación Política y Ciudadana. Los materiales se guardan automáticamente para cuando no tengas conexión.</p>
-        </section>
+        <!-- SECCIÓN: DASHBOARD / PANEL PRINCIPAL -->
+        <section id="dashboard" class="section active" aria-labelledby="dashboard-title">
+            
+            <!-- Tarjeta de bienvenida con progreso -->
+            <div class="content-card hero-card">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <span class="badge badge-new">✨ Nuevo Semestre</span>
+                        <h2 id="dashboard-title">¡Bienvenidos al Taller!</h2>
+                        <p>Este es tu espacio de trabajo para desarrollar proyectos socio educativos. Gestioná tu equipo, accedé a materiales y seguí tu avance.</p>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="active-projects">0</span>
+                            <span class="stat-label">Proyectos Activos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="completed-tasks">0</span>
+                            <span class="stat-label">Tareas Hechas</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="team-members">0</span>
+                            <span class="stat-label">Integrantes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barra de progreso general -->
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span>Progreso General del Taller</span>
+                        <span class="progress-percentage" id="overall-progress">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="overall-progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
 
-        <section class="content-card">
-            <h3>📚 Ejes Temáticos</h3>
-            <div class="material-item">
-                <span>📄 Eje 1: Teoría Política</span>
-                <span class="status-offline">✓ Disponible</span>
+            <!-- Accesos rápidos -->
+            <div class="quick-actions">
+                <h3>⚡ Accesos Rápidos</h3>
+                <div class="actions-grid">
+                    <button class="action-card" onclick="navigateTo('nuevo-proyecto')">
+                        <span class="action-icon">➕</span>
+                        <span class="action-text">Nuevo Proyecto</span>
+                    </button>
+                    <button class="action-card" onclick="navigateTo('subir-evidencia')">
+                        <span class="action-icon">📷</span>
+                        <span class="action-text">Subir Evidencia</span>
+                    </button>
+                    <button class="action-card" onclick="navigateTo('consultar')">
+                        <span class="action-icon">❓</span>
+                        <span class="action-text">Consultar</span>
+                    </button>
+                    <button class="action-card" onclick="navigateTo('biblioteca')">
+                        <span class="action-icon">📖</span>
+                        <span class="action-text">Biblioteca</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Avisos recientes -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>📢 Avisos del Taller</h3>
+                    <button class="btn-text" onclick="markAllRead()">Marcar todo leído</button>
+                </div>
+                <div class="notices-list" id="notices-container">
+                    <article class="notice-item priority-high unread" data-id="1">
+                        <div class="notice-icon">📋</div>
+                        <div class="notice-content">
+                            <h4>Entrega de Propuestas de Proyecto</h4>
+                            <p>Fecha límite: 25/03. Deben incluir: diagnóstico, objetivos y cronograma.</p>
+                            <time datetime="2024-03-15">Hace 2 horas</time>
+                        </div>
+                        <span class="unread-dot"></span>
+                    </article>
+                    
+                    <article class="notice-item priority-medium" data-id="2">
+                        <div class="notice-icon">🤝</div>
+                        <div class="notice-content">
+                            <h4>Formación de Equipos</h4>
+                            <p>Grupos de 4-5 integrantes. Definir roles: coordinador, documentalista, etc.</p>
+                            <time datetime="2024-03-14">Ayer</time>
+                        </div>
+                    </article>
+                    
+                    <article class="notice-item priority-low" data-id="3">
+                        <div class="notice-icon">📚</div>
+                        <div class="notice-content">
+                            <h4>Nuevo Material: Guía de Diagnóstico</h4>
+                            <p>Ya disponible offline. Incluye templates y ejemplos.</p>
+                            <time datetime="2024-03-13">Hace 2 días</time>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
+
+        <!-- SECCIÓN: PROYECTOS -->
+        <section id="proyectos" class="section hidden" aria-labelledby="proyectos-title">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2 id="proyectos-title">🚀 Mis Proyectos</h2>
+                    <button class="btn btn-primary" onclick="createNewProject()">
+                        <span>➕</span> Crear Proyecto
+                    </button>
+                </div>
+                
+                <div class="projects-filter">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="active">En curso</button>
+                    <button class="filter-btn" data-filter="completed">Finalizados</button>
+                    <button class="filter-btn" data-filter="draft">Borradores</button>
+                </div>
+
+                <div class="projects-grid" id="projects-container">
+                    <!-- Proyecto ejemplo 1 -->
+                    <article class="project-card" data-status="active" data-id="proj-1">
+                        <div class="project-header">
+                            <div class="project-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+                                🌱
+                            </div>
+                            <div class="project-meta">
+                                <span class="project-status active">En curso</span>
+                                <span class="project-date">Inicio: 10/03/2024</span>
+                            </div>
+                        </div>
+                        <h3>Huerta Escolar Sustentable</h3>
+                        <p>Implementación de huerta orgánica como recurso pedagógico interdisciplinario.</p>
+                        
+                        <div class="project-team">
+                            <div class="team-avatars">
+                                <img src="assets/avatar1.png" alt="Miembro 1" class="avatar">
+                                <img src="assets/avatar2.png" alt="Miembro 2" class="avatar">
+                                <span class="avatar-more">+3</span>
+                            </div>
+                            <span class="team-count">5 integrantes</span>
+                        </div>
+
+                        <div class="project-progress">
+                            <div class="progress-info">
+                                <span>Etapa: Diagnóstico</span>
+                                <span>35%</span>
+                            </div>
+                            <div class="progress-bar small">
+                                <div class="progress-fill" style="width: 35%"></div>
+                            </div>
+                        </div>
+
+                        <div class="project-actions">
+                            <button class="btn-secondary">Ver detalles</button>
+                            <button class="btn-icon" aria-label="Opciones">⋮</button>
+                        </div>
+                    </article>
+
+                    <!-- Proyecto ejemplo 2 -->
+                    <article class="project-card" data-status="draft" data-id="proj-2">
+                        <div class="project-header">
+                            <div class="project-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)">
+                                🎭
+                            </div>
+                            <div class="project-meta">
+                                <span class="project-status draft">Borrador</span>
+                                <span class="project-date">Última edición: hoy</span>
+                            </div>
+                        </div>
+                        <h3>Taller de Expresión Corporal</h3>
+                        <p>Propuesta de danza y teatro para la inclusión de estudiantes con dificultades...</p>
+                        
+                        <div class="project-team">
+                            <div class="team-avatars">
+                                <img src="assets/avatar3.png" alt="Miembro 1" class="avatar">
+                                <span class="avatar-more">+2</span>
+                            </div>
+                            <span class="team-count">3 integrantes</span>
+                        </div>
+
+                        <div class="project-progress">
+                            <div class="progress-info">
+                                <span>Etapa: Propuesta</span>
+                                <span>15%</span>
+                            </div>
+                            <div class="progress-bar small">
+                                <div class="progress-fill" style="width: 15%"></div>
+                            </div>
+                        </div>
+
+                        <div class="project-actions">
+                            <button class="btn-secondary">Continuar editando</button>
+                            <button class="btn-icon" aria-label="Opciones">⋮</button>
+                        </div>
+                    </article>
+
+                    <!-- Card para agregar nuevo -->
+                    <button class="project-card add-new" onclick="createNewProject()">
+                        <div class="add-icon">➕</div>
+                        <span>Crear nuevo proyecto</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: MATERIALES -->
+        <section id="materiales" class="section hidden" aria-labelledby="materiales-title">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2 id="materiales-title">📚 Materiales del Taller</h2>
+                    <div class="search-box">
+                        <input type="search" id="material-search" placeholder="Buscar materiales..." aria-label="Buscar materiales">
+                        <button class="search-btn">🔍</button>
+                    </div>
+                </div>
+
+                <div class="materials-categories">
+                    <button class="category-chip active" data-category="all">Todos</button>
+                    <button class="category-chip" data-category="guia">Guías</button>
+                    <button class="category-chip" data-category="template">Templates</button>
+                    <button class="category-chip" data-category="ejemplo">Ejemplos</button>
+                    <button class="category-chip" data-category="video">Videos</button>
+                </div>
+
+                <div class="materials-list" id="materials-container">
+                    
+                    <article class="material-item" data-category="guia" data-status="available">
+                        <div class="material-icon-box available">
+                            <span>📄</span>
+                            <div class="sync-status" title="Disponible offline">✓</div>
+                        </div>
+                        <div class="material-details">
+                            <h4>Guía de Diagnóstico Participativo</h4>
+                            <p class="material-desc">Metodologías para el relevamiento de necesidades comunitarias</p>
+                            <div class="material-tags">
+                                <span class="tag">PDF</span>
+                                <span class="tag">2.4 MB</span>
+                                <span class="tag tag-offline">Offline</span>
+                            </div>
+                        </div>
+                        <div class="material-actions">
+                            <button class="btn-icon" aria-label="Ver">👁️</button>
+                            <button class="btn-icon" aria-label="Compartir">📤</button>
+                        </div>
+                    </article>
+
+                    <article class="material-item" data-category="template" data-status="available">
+                        <div class="material-icon-box available">
+                            <span>📋</span>
+                            <div class="sync-status" title="Disponible offline">✓</div>
+                        </div>
+                        <div class="material-details">
+                            <h4>Template: Plan de Proyecto</h4>
+                            <p class="material-desc">Estructura estándar para presentación de propuestas</p>
+                            <div class="material-tags">
+                                <span class="tag">DOCX</span>
+                                <span class="tag">850 KB</span>
+                                <span class="tag tag-offline">Offline</span>
+                            </div>
+                        </div>
+                        <div class="material-actions">
+                            <button class="btn-icon" aria-label="Descargar">⬇️</button>
+                            <button class="btn-icon" aria-label="Compartir">📤</button>
+                        </div>
+                    </article>
+
+                    <article class="material-item" data-category="ejemplo" data-status="syncing">
+                        <div class="material-icon-box syncing">
+                            <span>📚</span>
+                            <div class="sync-spinner"></div>
+                        </div>
+                        <div class="material-details">
+                            <h4>Proyecto Ejemplo: Biblioteca Comunitaria</h4>
+                            <p class="material-desc">Caso completo de implementación en escuela rural</p>
+                            <div class="material-tags">
+                                <span class="tag">PDF</span>
+                                <span class="tag">5.1 MB</span>
+                                <span class="tag tag-syncing">Sincronizando...</span>
+                            </div>
+                        </div>
+                        <div class="material-actions">
+                            <button class="btn-icon" disabled aria-label="Esperando sincronización">⏳</button>
+                        </div>
+                    </article>
+
+                    <article class="material-item" data-category="video" data-status="locked">
+                        <div class="material-icon-box locked">
+                            <span>🎥</span>
+                            <div class="lock-icon">🔒</div>
+                        </div>
+                        <div class="material-details">
+                            <h4>Tutorial: Herramientas de Evaluación</h4>
+                            <p class="material-desc">Video explicativo sobre indicadores de impacto</p>
+                            <div class="material-tags">
+                                <span class="tag">MP4</span>
+                                <span class="tag">45 min</span>
+                                <span class="tag tag-locked">Próximamente</span>
+                            </div>
+                        </div>
+                        <div class="material-actions">
+                            <button class="btn-icon" disabled aria-label="No disponible">🔒</button>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: CALENDARIO -->
+        <section id="calendario" class="section hidden" aria-labelledby="calendario-title">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2 id="calendario-title">📅 Calendario del Taller</h2>
+                    <div class="view-toggle">
+                        <button class="toggle-btn active" data-view="month">Mes</button>
+                        <button class="toggle-btn" data-view="list">Lista</button>
+                    </div>
+                </div>
+
+                <div class="calendar-widget" id="calendar-container">
+                    <div class="calendar-header">
+                        <button class="btn-icon" aria-label="Mes anterior">‹</button>
+                        <h3>Marzo 2024</h3>
+                        <button class="btn-icon" aria-label="Mes siguiente">›</button>
+                    </div>
+                    
+                    <div class="calendar-grid">
+                        <div class="weekday">Dom</div>
+                        <div class="weekday">Lun</div>
+                        <div class="weekday">Mar</div>
+                        <div class="weekday">Mié</div>
+                        <div class="weekday">Jue</div>
+                        <div class="weekday">Vie</div>
+                        <div class="weekday">Sáb</div>
+                        
+                        <!-- Días del mes (simplificado) -->
+                        <div class="day other-month">25</div>
+                        <div class="day other-month">26</div>
+                        <div class="day other-month">27</div>
+                        <div class="day other-month">28</div>
+                        <div class="day other-month">29</div>
+                        <div class="day">1</div>
+                        <div class="day">2</div>
+                        <div class="day">3</div>
+                        <div class="day">4</div>
+                        <div class="day">5</div>
+                        <div class="day">6</div>
+                        <div class="day">7</div>
+                        <div class="day">8</div>
+                        <div class="day">9</div>
+                        <div class="day today">10</div>
+                        <div class="day">11</div>
+                        <div class="day">12</div>
+                        <div class="day">13</div>
+                        <div class="day">14</div>
+                        <div class="day">15</div>
+                        <div class="day event" data-event="1">16</div>
+                        <div class="day">17</div>
+                        <div class="day">18</div>
+                        <div class="day">19</div>
+                        <div class="day">20</div>
+                        <div class="day">21</div>
+                        <div class="day">22</div>
+                        <div class="day event" data-event="2">23</div>
+                        <div class="day">24</div>
+                        <div class="day event important" data-event="3">25</div>
+                        <div class="day">26</div>
+                        <div class="day">27</div>
+                        <div class="day">28</div>
+                        <div class="day">29</div>
+                        <div class="day">30</div>
+                        <div class="day">31</div>
+                    </div>
+
+                    <div class="upcoming-events">
+                        <h4>Próximos eventos</h4>
+                        <div class="event-list">
+                            <div class="event-item priority-high">
+                                <div class="event-date">
+                                    <span class="day">25</span>
+                                    <span class="month">MAR</span>
+                                </div>
+                                <div class="event-info">
+                                    <h5>Entrega Propuestas</h5>
+                                    <p>Fecha límite</p>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <span class="day">28</span>
+                                    <span class="month">MAR</span>
+                                </div>
+                                <div class="event-info">
+                                    <h5>Revisión de Avances</h5>
+                                    <p>Clase presencial</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: EQUIPO -->
+        <section id="equipo" class="section hidden" aria-labelledby="equipo-title">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2 id="equipo-title">👥 Mi Equipo</h2>
+                    <button class="btn btn-primary" onclick="inviteMember()">
+                        <span>➕</span> Invitar
+                    </button>
+                </div>
+
+                <div class="team-grid" id="team-container">
+                    <article class="team-card me">
+                        <div class="member-avatar">
+                            <img src="assets/avatar-me.png" alt="Tu avatar">
+                            <span class="status-online"></span>
+                        </div>
+                        <h4>Vos</h4>
+                        <p class="member-role">Coordinador/a</p>
+                        <span class="member-badge">Yo</span>
+                    </article>
+
+                    <article class="team-card">
+                        <div class="member-avatar">
+                            <img src="assets/avatar1.png" alt="María González">
+                            <span class="status-online"></span>
+                        </div>
+                        <h4>María González</h4>
+                        <p class="member-role">Documentalista</p>
+                        <button class="btn-text" onclick="contactMember('maria')">Contactar</button>
+                    </article>
+
+                    <article class="team-card">
+                        <div class="member-avatar">
+                            <img src="assets/avatar2.png" alt="Lucas Pérez">
+                            <span class="status-offline"></span>
+                        </div>
+                        <h4>Lucas Pérez</h4>
+                        <p class="member-role">Comunicación</p>
+                        <button class="btn-text" onclick="contactMember('lucas')">Contactar</button>
+                    </article>
+
+                    <article class="team-card add-member" onclick="inviteMember()">
+                        <div class="add-avatar">➕</div>
+                        <span>Agregar integrante</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Indicador de sincronización -->
+        <div id="sync-indicator" class="sync-toast hidden" role="status" aria-live="polite">
+            <div class="sync-spinner"></div>
+            <span>Sincronizando proyectos...</span>
+        </div>
+
     </main>
 
-    <script src="app.js"></script>
+    <!-- Navegación inferior móvil -->
+    <nav class="bottom-nav mobile-only" role="navigation" aria-label="Navegación móvil">
+        <a href="#dashboard" class="nav-item active" data-section="dashboard" aria-label="Panel">
+            <span class="nav-icon" aria-hidden="true">📊</span>
+            <span>Panel</span>
+        </a>
+        <a href="#proyectos" class="nav-item" data-section="proyectos" aria-label="Proyectos">
+            <span class="nav-icon" aria-hidden="true">🚀</span>
+            <span>Proyectos</span>
+        </a>
+        <a href="#materiales" class="nav-item" data-section="materiales" aria-label="Materiales">
+            <span class="nav-icon" aria-hidden="true">📚</span>
+            <span>Materiales</span>
+        </a>
+        <a href="#calendario" class="nav-item" data-section="calendario" aria-label="Calendario">
+            <span class="nav-icon" aria-hidden="true">📅</span>
+            <span>Fechas</span>
+        </a>
+        <a href="#equipo" class="nav-item" data-section="equipo" aria-label="Equipo">
+            <span class="nav-icon" aria-hidden="true">👥</span>
+            <span>Equipo</span>
+        </a>
+    </nav>
+
+    <!-- Toast container -->
+    <div id="toast-container" class="toast-container" role="region" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Modal container -->
+    <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Título</h3>
+                <button class="btn-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Contenido dinámico -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js" defer></script>
 </body>
 </html>
