@@ -4,18 +4,20 @@
   "description": "App de recursos para estudiantes de la ESRN N° 11 - Villa Regina",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2c3e50",
+  "background_color": "#FFF8F0", /* Color de fondo de la Splash Screen */
+  "theme_color": "#A0522D",      /* Color de la barra de estado del celular */
   "icons": [
     {
-      "src": "https://via.placeholder.com/192/2c3e50/ffffff?text=ESRN11",
+      "src": "https://via.placeholder.com/192/A0522D/FFF8F0?text=ESRN11",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "https://via.placeholder.com/512/2c3e50/ffffff?text=ESRN11",
+      "src": "https://via.placeholder.com/512/A0522D/FFF8F0?text=ESRN11",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
