@@ -67,11 +67,11 @@
             <li><a href="#proyectos" class="nav-link" data-section="proyectos">
                 <span class="nav-icon">🚀</span> Proyectos
             </a></li>
+            <li><a href="#clases" class="nav-link" data-section="clases">
+                <span class="nav-icon">📖</span> Clases
+            </a></li>
             <li><a href="#materiales" class="nav-link" data-section="materiales">
                 <span class="nav-icon">📚</span> Materiales
-            </a></li>
-            <li><a href="#calendario" class="nav-link" data-section="calendario">
-                <span class="nav-icon">📅</span> Calendario
             </a></li>
             <li><a href="#equipo" class="nav-link" data-section="equipo">
                 <span class="nav-icon">👥</span> Equipo
@@ -141,21 +141,21 @@
             <div class="quick-actions">
                 <h3>⚡ Accesos Rápidos</h3>
                 <div class="actions-grid">
-                    <button class="action-card" onclick="navigateTo('nuevo-proyecto')">
+                    <button class="action-card" onclick="navigateTo('proyectos')">
                         <span class="action-icon">➕</span>
                         <span class="action-text">Nuevo Proyecto</span>
                     </button>
-                    <button class="action-card" onclick="navigateTo('subir-evidencia')">
-                        <span class="action-icon">📷</span>
-                        <span class="action-text">Subir Evidencia</span>
-                    </button>
-                    <button class="action-card" onclick="navigateTo('consultar')">
-                        <span class="action-icon">❓</span>
-                        <span class="action-text">Consultar</span>
-                    </button>
-                    <button class="action-card" onclick="navigateTo('biblioteca')">
+                    <button class="action-card" onclick="navigateTo('clases')">
                         <span class="action-icon">📖</span>
-                        <span class="action-text">Biblioteca</span>
+                        <span class="action-text">Ver Clases</span>
+                    </button>
+                    <button class="action-card" onclick="navigateTo('materiales')">
+                        <span class="action-icon">📚</span>
+                        <span class="action-text">Materiales</span>
+                    </button>
+                    <button class="action-card" onclick="navigateTo('equipo')">
+                        <span class="action-icon">👥</span>
+                        <span class="action-text">Equipo</span>
                     </button>
                 </div>
             </div>
@@ -302,6 +302,166 @@
             </div>
         </section>
 
+        <!-- SECCIÓN: CLASES (NUEVA) -->
+        <section id="clases" class="section hidden" aria-labelledby="clases-title">
+            <div class="content-card">
+                <div class="card-header">
+                    <h2 id="clases-title">📖 Clases del Taller</h2>
+                    <span class="badge badge-new">Actualizado</span>
+                </div>
+
+                <div class="classes-grid" id="classes-container">
+                    <!-- Clase 1 -->
+                    <article class="class-card" data-id="clase-1">
+                        <div class="class-card-header" onclick="toggleClassCard('clase-1')">
+                            <div class="class-icon">📋</div>
+                            <div class="class-info">
+                                <h3>Clase 1: Introducción al TPSE</h3>
+                                <p class="class-date">15/03/2024</p>
+                            </div>
+                            <div class="class-toggle">
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                        </div>
+                        
+                        <div class="class-card-body hidden" id="clase-1-body">
+                            <div class="class-content">
+                                <h4>Contenido de la clase</h4>
+                                <p>Presentación del taller, formación de equipos y metodología de trabajo. Diagnóstico participativo.</p>
+                                
+                                <div class="class-materials">
+                                    <h5>📎 Material de clase</h5>
+                                    <div class="pdf-download-card">
+                                        <div class="pdf-info">
+                                            <span class="pdf-icon">📄</span>
+                                            <div class="pdf-details">
+                                                <span class="pdf-name">Presentación TPSE 2024.pdf</span>
+                                                <span class="pdf-size">2.4 MB</span>
+                                            </div>
+                                        </div>
+                                        <a href="assets/clases/clase-1.pdf" download class="btn btn-download">
+                                            <span>⬇️</span> Descargar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Clase 2 -->
+                    <article class="class-card" data-id="clase-2">
+                        <div class="class-card-header" onclick="toggleClassCard('clase-2')">
+                            <div class="class-icon">🎯</div>
+                            <div class="class-info">
+                                <h3>Clase 2: Metodología de Proyectos</h3>
+                                <p class="class-date">22/03/2024</p>
+                            </div>
+                            <div class="class-toggle">
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                        </div>
+                        
+                        <div class="class-card-body hidden" id="clase-2-body">
+                            <div class="class-content">
+                                <h4>Contenido de la clase</h4>
+                                <p>Definición de objetivos, cronograma y roles. Herramientas de planificación.</p>
+                                
+                                <div class="class-materials">
+                                    <h5>📎 Material de clase</h5>
+                                    <div class="pdf-download-card">
+                                        <div class="pdf-info">
+                                            <span class="pdf-icon">📄</span>
+                                            <div class="pdf-details">
+                                                <span class="pdf-name">Guía Metodología.pdf</span>
+                                                <span class="pdf-size">1.8 MB</span>
+                                            </div>
+                                        </div>
+                                        <a href="assets/clases/clase-2.pdf" download class="btn btn-download">
+                                            <span>⬇️</span> Descargar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Clase 3 -->
+                    <article class="class-card" data-id="clase-3">
+                        <div class="class-card-header" onclick="toggleClassCard('clase-3')">
+                            <div class="class-icon">📊</div>
+                            <div class="class-info">
+                                <h3>Clase 3: Diagnóstico Participativo</h3>
+                                <p class="class-date">29/03/2024</p>
+                            </div>
+                            <div class="class-toggle">
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                        </div>
+                        
+                        <div class="class-card-body hidden" id="clase-3-body">
+                            <div class="class-content">
+                                <h4>Contenido de la clase</h4>
+                                <p>Técnicas de relevamiento de datos. Encuestas, entrevistas y observación.</p>
+                                
+                                <div class="class-materials">
+                                    <h5>📎 Material de clase</h5>
+                                    <div class="pdf-download-card">
+                                        <div class="pdf-info">
+                                            <span class="pdf-icon">📄</span>
+                                            <div class="pdf-details">
+                                                <span class="pdf-name">Template Diagnóstico.pdf</span>
+                                                <span class="pdf-size">3.2 MB</span>
+                                            </div>
+                                        </div>
+                                        <a href="assets/clases/clase-3.pdf" download class="btn btn-download">
+                                            <span>⬇️</span> Descargar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Clase 4 -->
+                    <article class="class-card" data-id="clase-4">
+                        <div class="class-card-header" onclick="toggleClassCard('clase-4')">
+                            <div class="class-icon">🚀</div>
+                            <div class="class-info">
+                                <h3>Clase 4: Planificación del Proyecto</h3>
+                                <p class="class-date">05/04/2024</p>
+                            </div>
+                            <div class="class-toggle">
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                        </div>
+                        
+                        <div class="class-card-body hidden" id="clase-4-body">
+                            <div class="class-content">
+                                <h4>Contenido de la clase</h4>
+                                <p>Armado del plan de proyecto. Cronograma, presupuesto y recursos.</p>
+                                
+                                <div class="class-materials">
+                                    <h5>📎 Material de clase</h5>
+                                    <div class="pdf-download-card">
+                                        <div class="pdf-info">
+                                            <span class="pdf-icon">📄</span>
+                                            <div class="pdf-details">
+                                                <span class="pdf-name">Plan de Proyecto.pdf</span>
+                                                <span class="pdf-size">2.1 MB</span>
+                                            </div>
+                                        </div>
+                                        <a href="assets/clases/clase-4.pdf" download class="btn btn-download">
+                                            <span>⬇️</span> Descargar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <!-- SECCIÓN: MATERIALES -->
         <section id="materiales" class="section hidden" aria-labelledby="materiales-title">
             <div class="content-card">
@@ -432,7 +592,6 @@
                         <div class="weekday">Vie</div>
                         <div class="weekday">Sáb</div>
                         
-                        <!-- Días del mes (simplificado) -->
                         <div class="day other-month">25</div>
                         <div class="day other-month">26</div>
                         <div class="day other-month">27</div>
@@ -567,13 +726,13 @@
             <span class="nav-icon" aria-hidden="true">🚀</span>
             <span>Proyectos</span>
         </a>
+        <a href="#clases" class="nav-item" data-section="clases" aria-label="Clases">
+            <span class="nav-icon" aria-hidden="true">📖</span>
+            <span>Clases</span>
+        </a>
         <a href="#materiales" class="nav-item" data-section="materiales" aria-label="Materiales">
             <span class="nav-icon" aria-hidden="true">📚</span>
             <span>Materiales</span>
-        </a>
-        <a href="#calendario" class="nav-item" data-section="calendario" aria-label="Calendario">
-            <span class="nav-icon" aria-hidden="true">📅</span>
-            <span>Fechas</span>
         </a>
         <a href="#equipo" class="nav-item" data-section="equipo" aria-label="Equipo">
             <span class="nav-icon" aria-hidden="true">👥</span>
