@@ -1,7 +1,7 @@
 /**
  * TPSE 5° 2° - Service Worker
  * Estrategia: Cache-First + Network Fallback + Background Sync
- * Versión: 2.0.0
+ * Versión: 2.0.1
  */
 
 const CACHE_NAME = 'tpse-v2';
@@ -11,22 +11,21 @@ const IMAGE_CACHE = 'tpse-images-v2';
 
 // Assets críticos para el "shell" de la app
 const STATIC_ASSETS = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/app.js',
-    '/manifest.json',
-    '/assets/logo-192.png',
-    '/assets/logo-512.png',
-    '/assets/favicon-32.png'
+    './',
+    './index.html',
+    './style.css',
+    './app.js',
+    './manifest.json',
+    './assets/logo-512.png',
+    './assets/favicon-32.png'
 ];
 
 // Assets opcionales (se cachean bajo demanda)
 const OPTIONAL_ASSETS = [
-    '/assets/avatar-me.png',
-    '/assets/avatar1.png',
-    '/assets/avatar2.png',
-    '/assets/avatar3.png'
+    './assets/avatar-me.png',
+    './assets/avatar1.png',
+    './assets/avatar2.png',
+    './assets/avatar3.png'
 ];
 
 // ============================================
@@ -71,7 +70,6 @@ self.addEventListener('activate', (event) => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cacheName => {
-                    // Borrar caches que no sean los actuales
                     if (![STATIC_CACHE, DYNAMIC_CACHE, IMAGE_CACHE].includes(cacheName)) {
                         console.log('[SW] Eliminando cache viejo:', cacheName);
                         return caches.delete(cacheName);
@@ -94,30 +92,23 @@ self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
     
-    // Ignorar peticiones no GET
     if (request.method !== 'GET') {
-        // Pero si es POST/PUT/DELETE, manejar con Background Sync
         if (['POST', 'PUT', 'DELETE'].includes(request.method)) {
             event.respondWith(handleMutableRequest(request));
         }
         return;
     }
     
-    // Estrategia según tipo de recurso
     if (isStaticAsset(url)) {
-        // Cache-First para assets estáticos
         event.respondWith(cacheFirst(request, STATIC_CACHE));
     } 
     else if (isImage(request)) {
-        // Stale-While-Revalidate para imágenes
         event.respondWith(staleWhileRevalidate(request, IMAGE_CACHE));
     }
     else if (isAPI(request)) {
-        // Network-First para APIs (con fallback a cache)
         event.respondWith(networkFirst(request, DYNAMIC_CACHE));
     }
     else {
-        // Network con cache fallback para el resto
         event.respondWith(networkWithCacheFallback(request, DYNAMIC_CACHE));
     }
 });
@@ -126,7 +117,6 @@ self.addEventListener('fetch', (event) => {
 // ESTRATEGIAS DE CACHÉ
 // ============================================
 
-// Cache First: Ideal para CSS, JS, HTML estático
 async function cacheFirst(request, cacheName) {
     const cache = await caches.open(cacheName);
     const cached = await cache.match(request);
@@ -142,15 +132,13 @@ async function cacheFirst(request, cacheName) {
         return networkResponse;
     } catch (error) {
         console.error('[SW] Fallo total:', request.url);
-        // Fallback a página offline si es HTML
-        if (request.headers.get('accept').includes('text/html')) {
-            return caches.match('/index.html');
+        if (request.headers.get('accept')?.includes('text/html')) {
+            return caches.match('./index.html');
         }
         throw error;
     }
 }
 
-// Network First: Ideal para APIs y datos dinámicos
 async function networkFirst(request, cacheName) {
     const cache = await caches.open(cacheName);
     
@@ -163,7 +151,6 @@ async function networkFirst(request, cacheName) {
         const cached = await cache.match(request);
         if (cached) return cached;
         
-        // Si no hay cache, devolver respuesta offline genérica
         return new Response(JSON.stringify({
             offline: true,
             message: 'Sin conexión. Los datos se sincronizarán cuando vuelva la red.'
@@ -173,7 +160,6 @@ async function networkFirst(request, cacheName) {
     }
 }
 
-// Stale While Revalidate: Ideal para imágenes
 async function staleWhileRevalidate(request, cacheName) {
     const cache = await caches.open(cacheName);
     const cached = await cache.match(request);
@@ -186,7 +172,6 @@ async function staleWhileRevalidate(request, cacheName) {
     return cached || fetchPromise;
 }
 
-// Network con Cache Fallback: Uso general
 async function networkWithCacheFallback(request, cacheName) {
     try {
         const networkResponse = await fetch(request);
@@ -201,14 +186,11 @@ async function networkWithCacheFallback(request, cacheName) {
     }
 }
 
-// Manejar requests mutables (POST/PUT/DELETE) offline
 async function handleMutableRequest(request) {
-    // Si estamos online, procesar normal
     if (self.navigator.onLine) {
         return fetch(request);
     }
     
-    // Si offline, guardar en cola para sync posterior
     const queue = await getSyncQueue();
     queue.push({
         url: request.url,
@@ -220,12 +202,10 @@ async function handleMutableRequest(request) {
     });
     await saveSyncQueue(queue);
     
-    // Registrar para Background Sync
     if ('sync' in self.registration) {
         await self.registration.sync.register('sync-projects');
     }
     
-    // Responder con "aceptado para procesar"
     return new Response(JSON.stringify({
         queued: true,
         message: 'Cambio guardado. Se sincronizará cuando haya conexión.'
@@ -271,10 +251,8 @@ async function processSyncQueue() {
         }
     }
     
-    // Guardar los que fallaron para reintentar
     await saveSyncQueue(failed);
     
-    // Notificar a la app
     const clients = await self.clients.matchAll();
     clients.forEach(client => {
         client.postMessage({
@@ -286,7 +264,7 @@ async function processSyncQueue() {
 }
 
 // ============================================
-// PUSH NOTIFICATIONS (Opcional)
+// PUSH NOTIFICATIONS (Corregido - sin badge)
 // ============================================
 
 self.addEventListener('push', (event) => {
@@ -295,8 +273,7 @@ self.addEventListener('push', (event) => {
     const data = event.data?.json() || {
         title: 'TPSE 5° 2°',
         body: 'Nueva actualización disponible',
-        icon: '/assets/logo-192.png',
-        badge: '/assets/badge-72.png',
+        icon: './assets/logo-512.png',
         tag: 'general',
         requireInteraction: false
     };
@@ -305,11 +282,10 @@ self.addEventListener('push', (event) => {
         self.registration.showNotification(data.title, {
             body: data.body,
             icon: data.icon,
-            badge: data.badge,
             tag: data.tag,
             requireInteraction: data.requireInteraction,
             data: data.data || {},
-            actions: data.actions || [
+            actions: [
                 { action: 'open', title: 'Abrir app' },
                 { action: 'dismiss', title: 'Cerrar' }
             ]
@@ -321,31 +297,27 @@ self.addEventListener('notificationclick', (event) => {
     event.notification.close();
     
     if (event.action === 'open' || !event.action) {
-        event.waitUntil(
-            self.clients.openWindow('/')
-        );
+        event.waitUntil(self.clients.openWindow('./'));
     }
 });
 
 // ============================================
-// MENSAJES CON LA APP (App ↔ SW)
+// MENSAJES CON LA APP
 // ============================================
 
 self.addEventListener('message', (event) => {
-    const { type, payload } = event.data;
+    const { type } = event.data;
     
     switch (type) {
         case 'SKIP_WAITING':
             self.skipWaiting();
             break;
-            
         case 'GET_VERSION':
             event.ports[0].postMessage({
                 version: CACHE_NAME,
                 staticAssets: STATIC_ASSETS.length
             });
             break;
-            
         case 'CLEAR_CACHES':
             event.waitUntil(
                 caches.keys().then(names => 
@@ -355,7 +327,6 @@ self.addEventListener('message', (event) => {
                 })
             );
             break;
-            
         case 'FORCE_SYNC':
             event.waitUntil(processSyncQueue());
             break;
@@ -431,7 +402,6 @@ async function saveSyncQueue(queue) {
             const transaction = db.transaction([STORE_NAME], 'readwrite');
             const store = transaction.objectStore(STORE_NAME);
             
-            // Limpiar y guardar nuevo
             store.clear().onsuccess = () => {
                 queue.forEach(item => store.put(item));
                 resolve();
@@ -443,22 +413,18 @@ async function saveSyncQueue(queue) {
 }
 
 // ============================================
-// PERIODIC BACKGROUND SYNC (Si está disponible)
+// PERIODIC SYNC (Solo event listener)
 // ============================================
 
-if ('periodicSync' in self.registration) {
-    self.addEventListener('periodicsync', (event) => {
-        if (event.tag === 'update-content') {
-            console.log('[SW] Sincronización periódica...');
-            event.waitUntil(updateContent());
-        }
-    });
-}
+self.addEventListener('periodicsync', (event) => {
+    if (event.tag === 'update-content') {
+        console.log('[SW] Sincronización periódica...');
+        event.waitUntil(updateContent());
+    }
+});
 
 async function updateContent() {
-    // Actualizar materiales nuevos automáticamente
     const cache = await caches.open(DYNAMIC_CACHE);
-    // Aquí iría la lógica para fetchear nuevos materiales
     console.log('[SW] Contenido actualizado en segundo plano');
 }
 
