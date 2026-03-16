@@ -1,7 +1,7 @@
 /**
  * TPSE 5° 2° - App Controller
  * Taller de Proyectos Socio Educativos
- * Versión: 2.0.1
+ * Versión: 2.0.2
  */
 
 // ============================================
@@ -10,7 +10,7 @@
 
 const CONFIG = {
     appName: 'TPSE 5° 2°',
-    version: '2.0.1',
+    version: '2.0.2',
     storagePrefix: 'tpse_',
     syncInterval: 30000,
     debounceDelay: 300,
@@ -119,7 +119,6 @@ const Utils = {
         setTimeout(() => element.style.animation = '', duration);
     },
     
-    // ✅ MOVIDO ACÁ (antes de createNewProject)
     generateColor: () => {
         const colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe', '#43e97b', '#38f9d7'];
         return colors[Math.floor(Math.random() * colors.length)];
@@ -181,11 +180,12 @@ const Toast = {
 };
 
 // ============================================
-// GESTIÓN DE NAVEGACIÓN
+// GESTIÓN DE NAVEGACIÓN (ACTUALIZADO CON CLASES)
 // ============================================
 
 const Navigation = {
-    sections: ['dashboard', 'proyectos', 'materiales', 'calendario', 'equipo'],
+    // ✅ SE AGREGÓ 'clases' A LA LISTA
+    sections: ['dashboard', 'proyectos', 'clases', 'materiales', 'calendario', 'equipo'],
     
     init() {
         window.addEventListener('hashchange', () => this.handleHashChange());
@@ -205,7 +205,10 @@ const Navigation = {
     },
     
     navigateTo(sectionId) {
-        if (!this.sections.includes(sectionId)) return;
+        if (!this.sections.includes(sectionId)) {
+            console.error('Sección no existe:', sectionId);
+            return;
+        }
         
         document.querySelectorAll('.section').forEach(sec => {
             sec.classList.add('hidden');
@@ -581,11 +584,8 @@ const SyncManager = {
             AppState.sync.lastSync = new Date();
             Utils.storage.set('lastSync', AppState.sync.lastSync);
             
-            // ✅ SIN TOAST - Sync silencioso en segundo plano
-            
         } catch (error) {
             console.error('Error de sincronización:', error);
-            // ✅ SIN TOAST - Error silencioso
         } finally {
             AppState.sync.isSyncing = false;
             this.showSyncIndicator(false);
@@ -773,7 +773,6 @@ const Modal = {
         this.body.innerHTML = content;
         this.overlay.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        Utils.animate(this.overlay.querySelector('.modal-content'), 'slideUp');
     },
     
     close() {
@@ -802,11 +801,11 @@ window.createNewProject = () => {
             <div class="form-group">
                 <label for="project-icon">Icono representativo</label>
                 <select id="project-icon">
-                    <option value="🌱"> Naturaleza</option>
-                    <option value="🎭">🎭 Arte</option>
-                    <option value="📚"> Educación</option>
-                    <option value="♻️">️ Reciclaje</option>
-                    <option value="🤝"> Comunidad</option>
+                    <option value="🌱">🌱 Naturaleza</option>
+                    <option value="🎭"> Arte</option>
+                    <option value="📚">📚 Educación</option>
+                    <option value="♻️">♻️ Reciclaje</option>
+                    <option value="🤝">🤝 Comunidad</option>
                     <option value="💻">💻 Tecnología</option>
                 </select>
             </div>
@@ -909,7 +908,35 @@ window.shareMaterial = (id) => {
 };
 
 // ============================================
-// REGISTRO DEL SERVICE WORKER (CRÍTICO)
+// FUNCIONES PARA TARJETAS DE CLASES (NUEVO)
+// ============================================
+
+window.toggleClassCard = (classId) => {
+    const card = document.querySelector(`.class-card[data-id="${classId}"]`);
+    const body = document.getElementById(`${classId}-body`);
+    
+    if (!card || !body) {
+        console.error('No se encontró la clase:', classId);
+        return;
+    }
+    
+    // Toggle active class
+    card.classList.toggle('active');
+    
+    // Toggle visibility
+    if (body.classList.contains('hidden')) {
+        body.classList.remove('hidden');
+    } else {
+        body.classList.add('hidden');
+    }
+};
+
+window.closeModal = () => {
+    Modal.close();
+};
+
+// ============================================
+// REGISTRO DEL SERVICE WORKER
 // ============================================
 
 if ('serviceWorker' in navigator) {
